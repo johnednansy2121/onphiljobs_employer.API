@@ -1,0 +1,113 @@
+routes:
+  '/people/search':
+    post:
+      tags:
+        - Talents
+      summary: search talents in talent pool
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/schemas/talentSearchRequest'
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/searchResult'
+              - type: object
+                properties:
+                  Items:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/talentListItem'
+                  TotalItems:
+                    type: number
+                  PageNum:
+                    type: number
+                  PageSize:
+                    type: number
+
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+models:
+  talentListItem:
+    properties:
+      _id:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      avatarUrl:
+        type: string
+      jobTitle:
+        type: string
+      username:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      premium: 
+        type: object
+        properties:
+          pro: 
+            type: boolean
+          interviewed: 
+            type: boolean
+          interviewDate:
+            type: string
+      resume:
+        type: object
+        properties:
+          education:
+            type: number
+          skills:
+            type: number
+          achievements:
+            type: number
+          experience:
+            type: number
+  talentSearchRequest:
+    properties:
+      tags:
+        type: object
+        properties:
+          skill: 
+            type: array
+            items:
+              type: string
+          experience:
+            type: array
+            items:
+              type: string
+          education:
+            type: array
+            items:
+              type: string
+          aboutMe:
+            type: array
+            items:
+              type: string
+          achievement:
+            type: array
+            items:
+              type: string
+
+            
+      pageSize:
+        type: number
+        default: 20
+        example: 20
+      pageNum:
+        type: number
+        default: 1 
+        example: 1
+      orderBy:
+        type: string
+        example: 'metadata.dateCreated asc'

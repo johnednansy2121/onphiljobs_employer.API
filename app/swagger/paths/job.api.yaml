@@ -1,0 +1,634 @@
+routes:
+  '/job':
+    post:
+      tags:
+        - Jobs
+      summary: create job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/schemas/JobCreateRequest'
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    $ref: '#/definitions/schemas/JobItemDetails'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+    get:
+      tags:
+        - Jobs
+      summary: search job listing
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/parameters/filterParams'
+        - $ref: '#/parameters/pageNumParams'
+        - $ref: '#/parameters/pageSizeParams'
+        - $ref: '#/parameters/orderByParams'
+      responses:
+        '200':
+            description: 'ok'
+            schema:
+              allOf: 
+                - $ref: '#/definitions/schemas/searchResult'
+                - type: 'object'
+                  properties:
+                    Items:
+                      type: 'array'
+                      items: 
+                        $ref: '#/definitions/schemas/JobListItem'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+    put:
+      tags:
+        - Jobs
+      summary: edit job details
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/schemas/JobEdit'
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    $ref: '#/definitions/schemas/JobItemDetails'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+            
+  '/job/{id}':
+    get:
+      tags:
+        - Jobs
+      summary: get job details
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    $ref: '#/definitions/schemas/JobItemDetails'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/publish':
+    put:
+      tags:
+        - Jobs
+      summary: publish job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: boolean
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/draft':
+    put:
+      tags:
+        - Jobs
+      summary: draft job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: boolean
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/unlist':
+    put:
+      tags:
+        - Jobs
+      summary: unlist job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: boolean
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/applicant/applied':
+    get:
+      tags:
+        - Jobs
+      summary: list of applied applicant
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/Application'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'      
+  '/job/:id/applicant/all':
+    get:
+      tags:
+        - Jobs
+      summary: list of applicants
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/Application'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/applicant/withdrawn':
+    get:
+      tags:
+        - Jobs
+      summary: list of withdrawn applicants
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/Application'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/applicant/considering':
+    get:
+      tags:
+        - Jobs
+      summary: list of considering applicants
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/Application'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+  '/job/:id/applicant/shortlist':
+    get:
+      tags:
+        - Jobs
+      summary: list of shortlisted applicants
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/Application'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED' 
+  '/job/{id}/invite':
+    post:
+      tags:
+        - Jobs
+        - Job Invite
+      summary: create job invite
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: job id
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/schemas/JobInviteCreate'
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    $ref: '#/definitions/schemas/JobInvite'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+    get:
+      tags:
+        - Jobs
+        - Job Invite
+      summary: list of job invites in job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: job id
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/schemas/JobInviteItem'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'     
+      
+models:
+  Location:
+    properties:
+      address1: 
+        type: string
+      address2: 
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      postalCode:
+        type: string
+      country:
+        type: string
+      lat: 
+        type: number
+      long:
+        type: number
+  JobSection:
+    properties:
+      title:
+        type: string
+      description: 
+        type: string
+  JobSalary:
+    properties:
+      base:
+        type: number
+      upper:
+        type: number
+      currency:
+        type: string
+        example: 'AUD'
+      type:
+        type: string
+        example: 'Hourly'
+  CommitmentDuration: 
+    properties:
+      quantity:
+        type: number
+        example: 1
+      unit:
+        type: string
+        enum: [days, weeks, years, months]
+  JobCommitment: 
+    properties:
+      type:
+        type: string
+        enum: [full-time, part-time, casual]
+      duration:
+        $ref: '#/definitions/schemas/CommitmentDuration'
+  JobDetails:
+    properties:
+      isWorkFromHome:
+        type: boolean
+      location:
+        $ref: '#/definitions/schemas/Location'
+      salary:
+        $ref: '#/definitions/schemas/JobSalary'
+      commitment:
+        $ref: '#/definitions/schemas/JobCommitment'
+      category:
+        type: string
+  JobPremium:
+    properties:
+      isFeatured:
+        type: boolean
+  JobCreateRequest:
+    properties:
+      title:
+        type: string
+      subtitle:
+        type: string
+      section:
+        type: array
+        items:
+          $ref: '#/definitions/schemas/JobSection'
+      details:
+        $ref: '#/definitions/schemas/JobDetails'
+      premium:
+        $ref: '#/definitions/schemas/JobPremium'
+      status:
+        type: string
+        enum: [DRAFT, UNLISTED, PUBLISHED]
+      client:
+        type: string
+  JobItemDetails:
+    properties:
+      title:
+        type: string
+      subtitle:
+        type: string
+      section:
+        type: array
+        items:
+          $ref: '#/definitions/schemas/JobSection'
+      details:
+        $ref: '#/definitions/schemas/JobDetails'
+      premium:
+        $ref: '#/definitions/schemas/JobPremium'
+      status:
+        type: string
+        enum: [DRAFT, UNLISTED, PUBLISHED]
+      metadata:
+        type: object
+        properties:
+          createdBy:
+            type: string
+          client:
+            type: string
+          organization:
+            type: string
+          dateCreated:
+            type: string
+          dateUpdated:
+            type: string
+          publishedDate:
+            type: string
+  JobListItem:
+    properties:
+      _id: 
+        type: string
+      title:
+        type: string
+      subtitle:
+        type: string
+      status:
+        type: string
+      metadata:
+        type: object
+        properties:
+          dateCreated:
+            type: string
+          dateUpdated:
+            type: string
+  JobEdit:
+    properties:
+      _id:
+        type: string
+      title:
+        type: string
+      subtitle:
+        type: string
+      section:
+        type: array
+        items:
+          $ref: '#/definitions/schemas/JobSection'
+      details:
+        $ref: '#/definitions/schemas/JobDetails'
+      premium:
+        $ref: '#/definitions/schemas/JobPremium'
+      status:
+        type: string
+        enum: [DRAFT, UNLISTED, PUBLISHED]
+      client:
+        type: string
+  Application:
+    properties:
+      _id:
+        type: string
+      job:
+        type: string
+      applicant:
+        type: object
+        properties:
+          _id:
+            type: string
+          firstName:
+            type: string
+          lastName:
+            type: string
+          userName:
+            type: string
+          premium:
+            type: object
+            properties:
+              hasProSubscription:
+                type: boolean
+      metadata:
+        type: object
+        properties:
+          dateCreated: 
+            type: string
+          dateUpdated:
+            type: string
+          updatedBy:
+            type: string
+  JobInviteCreate:
+    properties:
+      jobId: 
+        type: string
+      applicantId:
+        type: string
+  JobInvite:
+    properties:
+      _id:
+        type: string
+      applicantId:
+        type: string
+      jobId:
+        type: string
+      status:
+        type: string
+      metadata:
+        type: object
+        properties:
+          user:
+            type: string
+          organization:
+            type: string
+          dateCreated:
+            type: string
+          dateUpdated:
+            type: string
+  JobInviteItem:
+    properties:
+      applicant:
+        type: object
+        properties:
+          _id: 
+            type: string
+          firstName: 
+            type: string
+          lastName:
+            type: string
+          userName:
+            type: string
+          premium:
+            type: object
+            properties:
+              hasProSubscription:
+                type: boolean
+      metadata:
+        type: object
+        properties:
+          dateCreated:
+            type: string
+          dateUpdated:
+            type: string
+      status:
+            type: string
+      
+          
+  
+      
+
+      

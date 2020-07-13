@@ -1,0 +1,79 @@
+routes:
+  /client:
+    post:
+      tags: 
+        - client
+      summary: create client
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/schemas/newClientRequest'
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    $ref: '#/definitions/schemas/client'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+    get:
+      tags:
+        - client
+      summary: get all clients
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/parameters/filterParams'
+        - $ref: '#/parameters/pageNumParams'
+        - $ref: '#/parameters/pageSizeParams'
+        - $ref: '#/parameters/orderByParams'
+      responses:
+        '200':
+            description: 'ok'
+            schema:
+              allOf: 
+                - $ref: '#/definitions/schemas/searchResult'
+                - type: 'object'
+                  properties:
+                    Items:
+                      type: 'array'
+                      items: 
+                        $ref: '#/definitions/schemas/client'
+        '400':
+          $ref: '#/responses/BADREQUEST'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+                  
+models:
+  newClientRequest:
+    properties:
+      name: 
+        type: string
+  client:
+    properties:
+      _id: 
+        type: string
+      name:
+        tyep: string
+      metadata:
+        type: object
+        properties:
+          dateCreated: 
+            type: string
+          dateUpdated:
+            type: string
+          createdBy:
+            type: string
+          organization:
+            type: string
+          updatedBy:
+            type: string

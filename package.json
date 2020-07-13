@@ -1,0 +1,54 @@
+{
+  "name": "OT.FLLAIR.PARTNERS.API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon ./app/index.ts",
+    "migrate": "node -e 'require(\"./migration\").down()' && node -e 'require(\"./migration\").up()'",
+    "migrate:only": "node -e 'require(\"./migration\").up()'",
+    "build": "rm -rf ./dist && tsc -p . && copyfiles -u 3 **/**/*.yaml dist/swagger/paths/",
+    "dev:build": "npm run build && npm run migrate:only && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asonbuchanan/OT.FLLAIR.PARTNERS.API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asonbuchanan/OT.FLLAIR.PARTNERS.API/issues"
+  },
+  "homepage": "https://github.com/asonbuchanan/OT.FLLAIR.PARTNERS.API#readme",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/yamljs": "^0.2.31",
+    "copyfiles": "^2.2.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/hapi__joi": "^17.1.0",
+    "@types/mongoose": "^5.7.20",
+    "@types/swagger-ui-express": "^4.1.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.14",
+    "odata-v4-mongodb": "^0.1.12",
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.1.0",
+    "yamljs": "^0.3.0"
+  }
+}

@@ -1,0 +1,49 @@
+routes:
+  /profile:
+    get: 
+      tags:
+        - profile
+      summary: get profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    $ref: '#/definitions/schemas/profile'
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+
+models:
+  profile:
+    properties:
+      _id:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      fullName:
+        type: string
+      avatarUrl:
+        type: string
+      scopes:
+        type: array
+        items:
+          type: string
+      metadata:
+        type: object
+        properties:
+          organization:
+            type: string
+          user: 
+            type: string
+          dateCreated: 
+            type: string
+          dateUpdated:
+            type: string

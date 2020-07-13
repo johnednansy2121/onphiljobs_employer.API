@@ -1,0 +1,40 @@
+routes:
+  '/test/jobs':
+    get:
+      tags:
+        - test
+      summary: test route for Job Search
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: boolean
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'
+
+  '/test/talents':
+    get:
+      tags:
+        - test
+      summary: test route for talent search
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 'ok'
+          schema:
+            allOf:
+              - $ref: '#/definitions/schemas/BASE_RESULT'
+              - type: object
+                properties:
+                  Data:
+                    type: boolean
+        '403':
+          $ref: '#/responses/UNAUTHORIZED'

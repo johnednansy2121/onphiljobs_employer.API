@@ -1,0 +1,99 @@
+routes:
+    '/application/:id/considering':
+        put:
+            tags:
+                - application
+            summary: change application status to considering
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                  name: id
+                  schema:
+                    type: string
+            responses:
+                '200':
+                    description: 'ok'
+                    schema:
+                        allOf:
+                            - $ref: '#/definitions/schemas/BASE_RESULT'
+                            - type: object
+                                properties:
+                                Data:
+                                    $ref: '#/definitions/schemas/SimpleApplication'
+                '400':
+                    $ref: '#/responses/BADREQUEST'
+                '403':
+                $ref: '#/responses/UNAUTHORIZED'
+    '/application/:id/shortlist':
+        put:
+            tags:
+                - application
+            summary: change application status to shortlist
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                    name: id
+                    schema:
+                    type: string
+            responses:
+                '200':
+                    description: 'ok'
+                    schema:
+                        allOf:
+                            - $ref: '#/definitions/schemas/BASE_RESULT'
+                            - type: object
+                                properties:
+                                Data:
+                                    $ref: '#/definitions/schemas/SimpleApplication'
+                '400':
+                    $ref: '#/responses/BADREQUEST'
+                '403':
+                $ref: '#/responses/UNAUTHORIZED'
+    '/application/:id/declined':
+        put:
+            tags:
+                - application
+            summary: change application status to declined
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                    name: id
+                    schema:
+                    type: string
+            responses:
+                '200':
+                    description: 'ok'
+                    schema:
+                        allOf:
+                            - $ref: '#/definitions/schemas/BASE_RESULT'
+                            - type: object
+                                properties:
+                                Data:
+                                    $ref: '#/definitions/schemas/SimpleApplication'
+                '400':
+                    $ref: '#/responses/BADREQUEST'
+                '403':
+                $ref: '#/responses/UNAUTHORIZED'
+models:
+    SimpleApplication:
+        properties:
+            _id: 
+                type: string
+            applicant:
+                type: string
+            job:
+                type: string
+            status:
+                type: status
+            metadata:
+                type: object
+                properties:
+                    updatedBy:
+                        type: string
+                    dateCreated:
+                        type: string
+                    dateUpdated:
+                        type: string
