@@ -1,13 +1,13 @@
 import { IRequestUser } from "../../schema/IUser";
 import { SearchResult, Result } from "../../schema/Result";
 import { IJobInviteItem, IApplicationInvite } from "../../schema/IApplicationInvite";
-import { FllairDBConnection, LoadFllairModels, FllairModel } from "../../utilities/FllairDBConnection";
+import { OnPhDBConnection, LoadFllairModels, FllairModel } from "../../utilities/FllairDBConnection";
 import { PartnersDBConnect } from "../../configuration/database";
 import loadModels from "../../models/loadModels";
 
 export default async(jobId: string, user: IRequestUser): Promise<Result<IJobInviteItem[]>> => {
     try {
-        const fllairdb = await FllairDBConnection()
+        const fllairdb = await OnPhDBConnection()
         const partnersdb = await PartnersDBConnect()
 
         const { FllairUserProfileModel } = FllairModel(fllairdb)

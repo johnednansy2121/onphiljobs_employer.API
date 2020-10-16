@@ -2,7 +2,7 @@ import { IRequestUser } from "../../schema/IUser";
 import { IApplicationWithApplicant, IApplication } from "../../schema/IApplication";
 import { PartnersDBConnect } from "../../configuration/database";
 import loadModels from "../../models/loadModels";
-import { FllairDBConnection, FllairModel } from "../../utilities/FllairDBConnection";
+import { OnPhDBConnection, FllairModel } from "../../utilities/FllairDBConnection";
 import { Result } from "../../schema/Result";
 
 
@@ -10,7 +10,7 @@ import { Result } from "../../schema/Result";
 export default async(jobId: string, status: string, user: IRequestUser): Promise<Result<IApplicationWithApplicant[]>> => {
     try {
         const PartnersDB = await PartnersDBConnect()
-        const FllairDB = await FllairDBConnection()
+        const FllairDB = await OnPhDBConnection()
 
         const { ApplicationModel, JobModel } = loadModels(PartnersDB) 
         const { FllairUserProfileModel } = FllairModel(FllairDB)

@@ -1,6 +1,6 @@
 import { Schema, createConnection } from "mongoose";
 
-const connection = createConnection(<string>process.env.MONGO_URL_FLLAIR, { useUnifiedTopology: true, useNewUrlParser: true })
+const connection = createConnection(<string>process.env.MONGODB_URL, { useUnifiedTopology: true, useNewUrlParser: true })
 
 export const FllairUserProfileSchema = new Schema({
     user: {

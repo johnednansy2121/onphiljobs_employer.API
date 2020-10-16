@@ -2,7 +2,7 @@ import { createConnection, Connection } from "mongoose";
 import { FllairEducationSchema, FllairSkillSchema, FllairAchievementSchema, FllairExperienceSchema, FllairUserProfileSchema, FllairUserSchema } from "../models/fllair";
 
 
-export const FllairDBConnection = () => createConnection(<string>process.env.MONGO_URL_FLLAIR, { useNewUrlParser: true, useUnifiedTopology: true })
+export const OnPhDBConnection = () => createConnection(<string>process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 export const LoadFllairModels = (db : any) => {
     db.model('user.education', FllairEducationSchema)
